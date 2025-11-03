@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuizApp.Views.MainPage"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              Title="QuizApp">
     <Grid
         RowDefinitions="*,*,auto">
@@ -13,7 +14,8 @@
             <ImageButton
                 Grid.Row="0"
                 Grid.Column="0"
-                Source="arrow_left_nav_icon.png"/>
+                Source="arrow_left_nav_icon.png"
+                Command="{Binding Path=PreguntaAnteriorCommand}"/>
 
             <Border
                 Grid.Row="0"
@@ -21,7 +23,7 @@
                 Stroke="Gray"
                 BackgroundColor="LightGray">
                 <Label
-                    Text="¿La peninsula de Yucatan se encuentra al norte de Mexico?"
+                    Text="{Binding Path=TextoDeLaPregunta}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     FontSize="Medium"
@@ -31,7 +33,8 @@
             <ImageButton
                 Grid.Row="0"
                 Grid.Column="2"
-                Source="arrow_right_nav_icon.png"/>
+                Source="arrow_right_nav_icon.png"
+                Command="{Binding Path=PreguntaSiguienteCommand}"/>
 
         </Grid>
 
@@ -43,16 +46,31 @@
             VerticalOptions="Center">
 
             <Button
-            Text="Cierto"/>
+            Text="Cierto"
+            Command="{Binding Path=CiertoCommand}"
+            >
+                <Button.CommandParameter>
+                    <system:Boolean>True</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+
+            
             <Button
-            Text="Falso"/>
+            Text="Falso"
+            Command="{Binding Path=FalsoCommand}"
+            >
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+
         </HorizontalStackLayout>
 
         <Label
             Margin="36"
             Grid.Row="2"
             Grid.Column="0"
-            Text="¡Correcto!"
+            Text="{Binding Path=TextoDelResultado}"
             HorizontalOptions="Center"
             VerticalOptions="Center"
             FontSize="Medium"/>
