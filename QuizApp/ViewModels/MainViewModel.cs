@@ -1,66 +1,30 @@
-﻿using QuizApp.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using QuizApp.Models;
 
 namespace QuizApp.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public partial class MainViewModel : ObservableObject
     {
-        private BancoDePreguntas _preguntas;
-        private Pregunta _preguntaActual;
 
-        public string TextoDeLaPregunta
-        {
-            get => _textoDeLaPregunta;
-            set
-            {
-                if (_textoDeLaPregunta != value)
-                {
-                    _textoDeLaPregunta = value;
-                    OnPropertyChanged(nameof(TextoDeLaPregunta));
-                }
-            }
-        }
+    private BancoDePreguntas _preguntas;
+    private Pregunta _preguntaActual;
 
-        public string TextoDelResultado
-        {
-            get => _TextoDelResultado;
-            set
-            {
-                if (_TextoDelResultado != value)
-                {
-                    _TextoDelResultado = value;
-                    OnPropertyChanged(nameof(TextoDelResultado));
-                }
-            }
-        }
 
-        private string _textoDeLaPregunta;
-        private string _TextoDelResultado;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public ICommand PreguntaAnteriorCommand { private set; get; }
-        public ICommand PreguntaSiguienteCommand { private set; get; }
-        public ICommand CiertoCommand { private set; get; }
-        public ICommand FalsoCommand { private set; get; }
+    [ObservableProperty]
+    private string? _textoDeLaPregunta;
+    [ObservableProperty]
+    private string? _TextoDelResultado;
+     
         public MainViewModel()
         {
             _preguntas = new BancoDePreguntas();
             _preguntaActual = _preguntas.GetPrimeraPregunta();
             TextoDeLaPregunta = _preguntaActual.Texto;
-            TextoDelResultado = string.Empty;
-            PreguntaAnteriorCommand = new Command(IrAPreguntaAnterior);
-            PreguntaSiguienteCommand = new Command(IrAPreguntaSiguiente);
-            CiertoCommand = new Command<bool>(VerificarRespuesta);
-            FalsoCommand = new Command<bool>(VerificarRespuesta);
+            TextoDelResultado = string.Empty;           
         }
 
+        [RelayCommand]
         public void IrAPreguntaSiguiente()
         {
             _preguntaActual = _preguntas.GetSiguientePregunta();
@@ -68,14 +32,14 @@ namespace QuizApp.ViewModels
             TextoDelResultado = string.Empty;
 
         }
-
+        [RelayCommand]
         public void IrAPreguntaAnterior()
         {
             _preguntaActual = _preguntas.GetPreguntaAnterior();
             TextoDeLaPregunta = _preguntaActual.Texto;
             TextoDelResultado = string.Empty;
         }
-
+        [RelayCommand]
         public void VerificarRespuesta(bool RespuestaDelUsuario)
         {
             if (RespuestaDelUsuario == _preguntaActual.RespuestaEsCierto)
@@ -86,11 +50,6 @@ namespace QuizApp.ViewModels
             {
                 TextoDelResultado = "¡Incorrecto!";
             }
-        }
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }       
     }
 }

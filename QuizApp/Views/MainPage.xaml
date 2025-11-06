@@ -15,7 +15,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Source="arrow_left_nav_icon.png"
-                Command="{Binding Path=PreguntaAnteriorCommand}"/>
+                Command="{Binding Path=IrAPreguntaAnteriorCommand}"/>
 
             <Border
                 Grid.Row="0"
@@ -34,7 +34,7 @@
                 Grid.Row="0"
                 Grid.Column="2"
                 Source="arrow_right_nav_icon.png"
-                Command="{Binding Path=PreguntaSiguienteCommand}"/>
+                Command="{Binding Path=IrAPreguntaSiguienteCommand}"/>
 
         </Grid>
 
@@ -47,7 +47,7 @@
 
             <Button
             Text="Cierto"
-            Command="{Binding Path=CiertoCommand}"
+            Command="{Binding Path=VerificarRespuestaCommand}"
             >
                 <Button.CommandParameter>
                     <system:Boolean>True</system:Boolean>
@@ -57,7 +57,7 @@
             
             <Button
             Text="Falso"
-            Command="{Binding Path=FalsoCommand}"
+            Command="{Binding Path=VerificarRespuestaCommand}"
             >
                 <Button.CommandParameter>
                     <system:Boolean>False</system:Boolean>
