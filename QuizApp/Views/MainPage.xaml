@@ -67,7 +67,7 @@
         </HorizontalStackLayout>
 
         <Label
-            Margin="36"
+            Margin="38"
             Grid.Row="2"
             Grid.Column="0"
             Text="{Binding Path=TextoDelResultado}"
